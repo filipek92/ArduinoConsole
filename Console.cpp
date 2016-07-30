@@ -7,17 +7,17 @@
 #include "Arduino.h"
 #include "Console.h"
 
-CommandLine::CommandLine(Stream &s): _s(s)
+Console::Console(Stream &s): _s(s)
 {
   setPrompt("");
 }
 
-CommandLine::CommandLine(Stream &s, const char *prompt): _s(s)
+Console::Console(Stream &s, const char *prompt): _s(s)
 {
   setPrompt(prompt);
 }
 
-void CommandLine::addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[])
+void Console::addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[])
 {
   cmd_names[cmd_cnt] = cmd;
   cmd_ptrs[cmd_cnt] = callback;
@@ -25,16 +25,16 @@ void CommandLine::addCommand(void (*callback)(uint8_t argc, char *argv[]), const
   cmd_cnt++;
 }
 
-void CommandLine::doWork()
+void Console::doWork()
 {
   if(_s.available()) readChar();
 }
 
-void CommandLine::setPrompt(const char *prompt){
+void Console::setPrompt(const char *prompt){
   _prompt = (char*)prompt;
 }
 
-void CommandLine::readChar()
+void Console::readChar()
 {
   char ch;
   ch = _s.read();
@@ -66,7 +66,7 @@ void CommandLine::readChar()
   last = ch;
 }
 
-void CommandLine::proccessCmd(){
+void Console::proccessCmd(){
   for(int i=0; i<cmd_cnt; i++){
     if((strncmp(cmd_names[i], buffer, cmd_lenghts[i])==0) && ((buffer[cmd_lenghts[i]]==' ') || (buffer[cmd_lenghts[i]]==0))){
       proccessArgs(i);
@@ -83,7 +83,7 @@ void CommandLine::proccessCmd(){
   _s.println("Prikaz nenalezen");
 }
 
-void CommandLine::proccessArgs(uint8_t n){
+void Console::proccessArgs(uint8_t n){
   char *p = buffer+cmd_lenghts[n]+1;
   uint8_t argcnt=0;
   boolean hasArg = false;
@@ -108,10 +108,10 @@ void CommandLine::proccessArgs(uint8_t n){
   cmd_ptrs[n](argcnt,cmd_args);
 }
 
-boolean CommandLine::isWhiteChar(char ch){
+boolean Console::isWhiteChar(char ch){
   return (ch<32) || (ch>126);
 }
 
-Print& CommandLine::printer(){
+Print& Console::printer(){
   return _s;
 }

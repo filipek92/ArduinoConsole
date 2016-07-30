@@ -1,11 +1,11 @@
 /*
-  CommandLine_h - Library for parsing commands
+  Console_h - Library for parsing commands
   from Serial block
   Created by Filip Richter, April 24, 2015.
   Released into the public domain.
 */
-#ifndef CommandLine_h
-#define CommandLine_h
+#ifndef Console_h
+#define Console_h
 
 #define BUFFER_LENGTH  40
 #define CMD_COUNT      20
@@ -14,11 +14,11 @@
 #include "Arduino.h"
 #include "stdint.h"
 
-class CommandLine
+class Console
 {
   public:
-    CommandLine(Stream &s);
-    CommandLine(Stream &s, const char *prompt);
+    Console(Stream &s);
+    Console(Stream &s, const char *prompt);
     void addCommand(void (*fcn)(uint8_t argc, char *argv[]), const char cmd[]);
     void doWork();
     void setPrompt(const char *prompt);
