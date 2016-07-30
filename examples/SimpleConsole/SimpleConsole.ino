@@ -1,5 +1,5 @@
-#include <Console.h>
-Console cmd(Serial, "Arduino>>");
+#include <SerialConsole.h>
+SerialConsole cmd(Serial, "Arduino>>");
 
 void setup() {
   Serial.begin(115200);

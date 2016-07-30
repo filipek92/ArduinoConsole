@@ -1,11 +1,11 @@
 #######################################
-# Syntax Coloring Map For Console
+# Syntax Coloring Map For SerialConsole
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-Console KEYWORD1
+SerialConsole KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################

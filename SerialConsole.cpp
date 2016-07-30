@@ -5,19 +5,19 @@
 */
 
 #include "Arduino.h"
-#include "Console.h"
+#include "SerialConsole.h"
 
-Console::Console(Stream &s): _s(s)
+SerialConsole::SerialConsole(Stream &s): _s(s)
 {
   setPrompt("");
 }
 
-Console::Console(Stream &s, const char *prompt): _s(s)
+SerialConsole::SerialConsole(Stream &s, const char *prompt): _s(s)
 {
   setPrompt(prompt);
 }
 
-void Console::addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[])
+void SerialConsole::addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[])
 {
   cmd_names[cmd_cnt] = cmd;
   cmd_ptrs[cmd_cnt] = callback;
@@ -25,16 +25,16 @@ void Console::addCommand(void (*callback)(uint8_t argc, char *argv[]), const cha
   cmd_cnt++;
 }
 
-void Console::doWork()
+void SerialConsole::doWork()
 {
   if(_s.available()) readChar();
 }
 
-void Console::setPrompt(const char *prompt){
+void SerialConsole::setPrompt(const char *prompt){
   _prompt = (char*)prompt;
 }
 
-void Console::readChar()
+void SerialConsole::readChar()
 {
   char ch;
   ch = _s.read();
@@ -66,7 +66,7 @@ void Console::readChar()
   last = ch;
 }
 
-void Console::proccessCmd(){
+void SerialConsole::proccessCmd(){
   for(int i=0; i<cmd_cnt; i++){
     if((strncmp(cmd_names[i], buffer, cmd_lenghts[i])==0) && ((buffer[cmd_lenghts[i]]==' ') || (buffer[cmd_lenghts[i]]==0))){
       proccessArgs(i);
@@ -83,7 +83,7 @@ void Console::proccessCmd(){
   _s.println("Prikaz nenalezen");
 }
 
-void Console::proccessArgs(uint8_t n){
+void SerialConsole::proccessArgs(uint8_t n){
   char *p = buffer+cmd_lenghts[n]+1;
   uint8_t argcnt=0;
   boolean hasArg = false;
@@ -108,10 +108,10 @@ void Console::proccessArgs(uint8_t n){
   cmd_ptrs[n](argcnt,cmd_args);
 }
 
-boolean Console::isWhiteChar(char ch){
+boolean SerialConsole::isWhiteChar(char ch){
   return (ch<32) || (ch>126);
 }
 
-Print& Console::printer(){
+Print& SerialConsole::printer(){
   return _s;
 }
