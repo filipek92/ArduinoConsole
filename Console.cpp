@@ -5,7 +5,7 @@
 */
 
 #include "Arduino.h"
-#include "CommandLine.h"
+#include "Console.h"
 
 CommandLine::CommandLine(Stream &s): _s(s)
 {
