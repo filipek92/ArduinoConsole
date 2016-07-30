@@ -1,5 +1,5 @@
 /*
-  SerialConsole_h - Library for parsing commands
+  SerialConsole.h - Library for parsing commands
   from Serial block
   Created by Filip Richter, April 24, 2015.
   Released into the public domain.
