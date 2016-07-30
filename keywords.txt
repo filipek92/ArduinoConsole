@@ -11,6 +11,8 @@ Console KEYWORD1
 #######################################
 addCommand	KEYWORD2
 doWork	KEYWORD2
+setPrompt	KEYWORD2
+printer	KEYWORD2
 #######################################
 # Instances (KEYWORD2)
 #######################################
