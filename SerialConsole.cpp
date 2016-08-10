@@ -18,6 +18,15 @@ SerialConsole::SerialConsole(Stream &s, const char *prompt): _s(s)
   setPrompt(prompt);
 }
 
+void SerialConsole::begin(){
+  _s.print(_prompt)
+}
+
+void SerialConsole::begin(const char *info){
+  _s.println(info);
+  _s.print(_prompt);
+}
+
 void SerialConsole::addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[])
 {
   cmd_names[cmd_cnt] = cmd;

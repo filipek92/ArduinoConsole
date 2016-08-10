@@ -19,7 +19,9 @@ class SerialConsole
   public:
     SerialConsole(Stream &s);
     SerialConsole(Stream &s, const char *prompt);
-    void addCommand(void (*fcn)(uint8_t argc, char *argv[]), const char cmd[]);
+    void begin();
+    void begin(const char *info);
+    void addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[]);
     void doWork();
     void setPrompt(const char *prompt);
     Print& printer();
