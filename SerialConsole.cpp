@@ -19,7 +19,7 @@ SerialConsole::SerialConsole(Stream &s, const char *prompt): _s(s)
 }
 
 void SerialConsole::begin(){
-  _s.print(_prompt)
+  _s.print(_prompt);
 }
 
 void SerialConsole::begin(const char *info){
@@ -84,13 +84,18 @@ void SerialConsole::proccessCmd(){
     }
   }
   if(strcmp("help", buffer)==0){
-    _s.println("List prikazu:");
-    for(int i=0; i<cmd_cnt; i++){
-      _s.print("  ");
-      _s.println(cmd_names[i]);  
-    }  
+    help();
+    return;
   }
   _s.println("Prikaz nenalezen");
+}
+
+void SerialConsole::help(){
+  _s.println("List prikazu:");
+  for(int i=0; i<cmd_cnt; i++){
+    _s.print("  ");
+    _s.println(cmd_names[i]);
+  }
 }
 
 void SerialConsole::proccessArgs(uint8_t n){

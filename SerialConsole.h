@@ -24,6 +24,7 @@ class SerialConsole
     void addCommand(void (*callback)(uint8_t argc, char *argv[]), const char cmd[]);
     void doWork();
     void setPrompt(const char *prompt);
+    void help();
     Print& printer();
   private:
     char *_prompt;
