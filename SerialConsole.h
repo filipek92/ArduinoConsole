@@ -7,7 +7,7 @@
 #ifndef SerialConsole_h
 #define SerialConsole_h
 
-#define BUFFER_LENGTH  40
+#define CONSOLE_BUFFER_LENGTH  40
 #define CMD_COUNT      20
 #define ARGS_COUNT     20
 
@@ -37,7 +37,7 @@ class SerialConsole
     uint8_t cmd_cnt=0;
     char last;
     
-    char buffer[BUFFER_LENGTH];
+    char buffer[CONSOLE_BUFFER_LENGTH];
     uint8_t buffer_ptr=0;
     
     void readChar();

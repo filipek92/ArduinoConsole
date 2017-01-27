@@ -63,7 +63,7 @@ void SerialConsole::readChar()
   if(ch=='\n' || isWhiteChar(ch)){
     return;
   }
-  if(buffer_ptr>=BUFFER_LENGTH){
+  if(buffer_ptr>=CONSOLE_BUFFER_LENGTH){
     _s.println();
     _s.println(F("Prilis dlouhy prikaz"));
     _s.print(_prompt);
