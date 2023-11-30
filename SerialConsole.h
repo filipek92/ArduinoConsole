@@ -16,7 +16,7 @@
 
 #include <Print.h>
 
-class SerialConsole
+class SerialConsole : public Print
 {
   public:
     SerialConsole(Stream &s);
@@ -30,9 +30,9 @@ class SerialConsole
     Print& printer();
     void proccessCmd(char* buffer);
         
-    //size_t write(uint8_t val) override;   // Overriding base functionality
-    //size_t write(const uint8_t *buffer, size_t size) override;   // Overriding base functionality
-    //void (*debugHandler)(const uint8_t *name, size_t size);
+    size_t write(uint8_t val) override;   // Overriding base functionality
+    size_t write(const uint8_t *buffer, size_t size) override;   // Overriding base functionality
+    void (*debugHandler)(const uint8_t *name, size_t size);
   private:
     char *_prompt;
 

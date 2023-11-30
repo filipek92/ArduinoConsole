@@ -11,13 +11,13 @@
 SerialConsole::SerialConsole(Stream &s): _s(s)
 {
   setPrompt("");
-  //debugHandler=0;
+  debugHandler=0;
 }
 
 SerialConsole::SerialConsole(Stream &s, const char *prompt): _s(s)
 {
   setPrompt(prompt);
-  //debugHandler=0;
+  debugHandler=0;
 }
 
 void SerialConsole::begin(){
@@ -89,14 +89,14 @@ void SerialConsole::proccessCmd(char* buffer){
     help();
     return;
   }
-  _s.println("Prikaz nenalezen");
+  println("Prikaz nenalezen");
 }
 
 void SerialConsole::help(){
-  _s.println("List prikazu:");
+  println("List prikazu:");
   for(int i=0; i<cmd_cnt; i++){
-    _s.print("  ");
-    _s.println(cmd_names[i]);
+    print("  ");
+    println(cmd_names[i]);
   }
 }
 
@@ -130,14 +130,14 @@ boolean SerialConsole::isWhiteChar(char ch){
 }
 
 Print& SerialConsole::printer(){
-  return _s;
+  return *this;
 }
 
-//size_t SerialConsole::write(uint8_t val) {
-//    //_s.write(val);
-//    //if(debugHandler) debugHandler(&val, 1);
-//}
-//size_t SerialConsole::write(const uint8_t *buffer, size_t size) {
-    //_s.write(buffer, size);
-    //if(debugHandler) debugHandler(buffer, size);
-//}
+size_t SerialConsole::write(uint8_t val) {
+  if(debugHandler) debugHandler(&val, 1);
+  return _s.write(val);
+}
+size_t SerialConsole::write(const uint8_t *buffer, size_t size) {
+  if(debugHandler) debugHandler(buffer, size);
+  return _s.write(buffer, size);
+}
