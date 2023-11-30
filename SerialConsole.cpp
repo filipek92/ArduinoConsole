@@ -11,11 +11,13 @@
 SerialConsole::SerialConsole(Stream &s): _s(s)
 {
   setPrompt("");
+  //debugHandler=0;
 }
 
 SerialConsole::SerialConsole(Stream &s, const char *prompt): _s(s)
 {
   setPrompt(prompt);
+  //debugHandler=0;
 }
 
 void SerialConsole::begin(){
@@ -51,7 +53,7 @@ void SerialConsole::readChar()
   if(ch=='\r' || (ch=='\n' && last!='\r')){
     buffer[buffer_ptr]=0;
     _s.println();
-    proccessCmd();
+    proccessCmd(buffer);
     buffer_ptr=0;
     _s.print(_prompt);
     return;
@@ -76,10 +78,10 @@ void SerialConsole::readChar()
   last = ch;
 }
 
-void SerialConsole::proccessCmd(){
+void SerialConsole::proccessCmd(char* buffer){
   for(int i=0; i<cmd_cnt; i++){
     if((strncmp(cmd_names[i], buffer, cmd_lenghts[i])==0) && ((buffer[cmd_lenghts[i]]==' ') || (buffer[cmd_lenghts[i]]==0))){
-      proccessArgs(i);
+      proccessArgs(buffer, i);
       return;      
     }
   }
@@ -98,7 +100,7 @@ void SerialConsole::help(){
   }
 }
 
-void SerialConsole::proccessArgs(uint8_t n){
+void SerialConsole::proccessArgs(char* buffer, uint8_t n){
   char *p = buffer+cmd_lenghts[n]+1;
   uint8_t argcnt=0;
   boolean hasArg = false;
@@ -130,3 +132,12 @@ boolean SerialConsole::isWhiteChar(char ch){
 Print& SerialConsole::printer(){
   return _s;
 }
+
+//size_t SerialConsole::write(uint8_t val) {
+//    //_s.write(val);
+//    //if(debugHandler) debugHandler(&val, 1);
+//}
+//size_t SerialConsole::write(const uint8_t *buffer, size_t size) {
+    //_s.write(buffer, size);
+    //if(debugHandler) debugHandler(buffer, size);
+//}

@@ -7,12 +7,14 @@
 #ifndef SerialConsole_h
 #define SerialConsole_h
 
-#define CONSOLE_BUFFER_LENGTH  40
+#define CONSOLE_BUFFER_LENGTH  80
 #define CMD_COUNT      20
 #define ARGS_COUNT     20
 
 #include "Arduino.h"
 #include "stdint.h"
+
+#include <Print.h>
 
 class SerialConsole
 {
@@ -26,9 +28,14 @@ class SerialConsole
     void setPrompt(const char *prompt);
     void help();
     Print& printer();
+    void proccessCmd(char* buffer);
+        
+    //size_t write(uint8_t val) override;   // Overriding base functionality
+    //size_t write(const uint8_t *buffer, size_t size) override;   // Overriding base functionality
+    //void (*debugHandler)(const uint8_t *name, size_t size);
   private:
     char *_prompt;
-  
+
     Stream& _s; 
     void (*cmd_ptrs[CMD_COUNT])(uint8_t, char **);
     const char *cmd_names[CMD_COUNT];
@@ -41,8 +48,7 @@ class SerialConsole
     uint8_t buffer_ptr=0;
     
     void readChar();
-    void proccessCmd();
-    void proccessArgs(uint8_t n);
+    void proccessArgs(char* buffer, uint8_t n);
     boolean isWhiteChar(char ch);
 };
 
